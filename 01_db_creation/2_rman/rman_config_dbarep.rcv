@@ -18,6 +18,7 @@
 #
 CONFIGURE RETENTION POLICY TO RECOVERY WINDOW OF 14 DAYS;
 CONFIGURE CONTROLFILE AUTOBACKUP ON;
-CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '/var/orabackup/rman/db01/dbarep/%F.ctl';
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '/backup/dbbackup/rman/skbdb02/%F.ctl';
+
 CONFIGURE SNAPSHOT CONTROLFILE NAME                          TO '/var/orabackup/rman/db01/dbarep/dbarep_controlfile_snap.ctl';
 CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT                       '/var/orabackup/rman/db01/dbarep/%d_%T_misc_%u_%s';

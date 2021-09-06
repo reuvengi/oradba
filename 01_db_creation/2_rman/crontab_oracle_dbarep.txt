@@ -11,3 +11,8 @@
 #
 30 02 * * 2 /opt/oracle/admin/dbarep/scripts/rman/rman_backup.sh dbarep rman_tbsp_gp2_backup > /opt/oracle/admin/dbarep/scripts/rman/rman_backup_cron.log 2>&1
 30 02 * * 3 /opt/oracle/admin/dbarep/scripts/rman/rman_backup.sh dbarep rman_tbsp_gp3_backup > /opt/oracle/admin/dbarep/scripts/rman/rman_backup_cron.log 2>&1
+
+
+
+0 0 * * SUN /home/oracle/scripts/rman/rman_backup.sh skbdb02 rman_inc_0_backup >> /home/oracle/scripts/rman/rman_backup_cron.log 2>&1
+0 * * * * /home/oracle/scripts/rman/rman_backup.sh skbdb02 rman_arc_backup >> /home/oracle/scripts/rman/rman_backup_cron.log 2>&1
