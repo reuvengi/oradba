@@ -28,14 +28,14 @@ release channel;
 # Begin a full inc 0 backup
 #
 run {
-allocate channel inc_0 type disk format='/backup/dbbackup/rman/skbdb02/FULL/%d_%T_FULL_%u_%s';
+allocate channel inc_0 type disk format='/backup/dbbackup/rman/skbdb02/%d_%T_FULL_%u_%s';
 backup as compressed backupset incremental level 0 database;
 }
 #
 # Backup and delete any archivelogs not previously backed up
 #
 run {
-allocate channel arc0 type disk format='/backup/dbbackup/rman/skbdb02/ARCH/%d_%T_ARCH_%u_%s';
+allocate channel arc0 type disk format='/backup/dbbackup/rman/skbdb02/%d_%T_ARCH_%u_%s';
 backup as compressed backupset archivelog all not backed up delete all input;
 }
 #

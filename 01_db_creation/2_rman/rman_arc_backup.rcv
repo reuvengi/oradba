@@ -22,7 +22,7 @@
 # Backup archivelogs
 #
 run {
-allocate channel ntt_arc0 type disk format='/backup/dbbackup/rman/skbdb02/ARCH/%d_%T_arc_%s';
+allocate channel ntt_arc0 type disk format='/backup/dbbackup/rman/skbdb02/%d_%T_arc_%s';
 backup as compressed backupset archivelog all not backed up delete all input;
 }
 #

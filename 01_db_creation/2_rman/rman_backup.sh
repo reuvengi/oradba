@@ -20,24 +20,24 @@
 #
 # Date            Who             Description
 #
-# 18th Jul 2017   Aidan Lawrence  Validated for git
+# 18th Jul 2017   Aidan BASE_DIRLawrence  Validated for git
 #
 
 #
 # Get the machine name for reporting purposes
 MACHINE=`uname -n`
-BASE_DIR=/opt/oracle/admin
+BASE_DIR=/home/oracle
 #
 # Set RMAN_CATALOG and EMAIL_DIST to your personal prefernce
-RMAN_CATALOG=<rman_schema>/<rman_pw>@<catalog_database>
-EMAIL_DIST=oracle@db01.example.com
+#RMAN_CATALOG=<rman_schema>/<rman_pw>@<catalog_database>
+EMAIL_DIST=ibdba@skbbank.ru
 
 #
 # Ensure path includes sendmail:
-export ORACLE_HOME=/opt/oracle/product/12.1.0/dbhome_1
-export LD_LIBRARY_PATH=/opt/oracle/product/12.1.0/dbhome_1/lib
+export ORACLE_HOME=/u01/oracle/product/19.0.0.0/dbhome_1
+export LD_LIBRARY_PATH=/u01/oracle/product/19.0.0.0/dbhome_1/lib:/lib:/usr/lib
 export PATH=$ORACLE_HOME/bin:/usr/local/bin:/usr/kerberos/bin:/bin:/usr/bin:/usr/sbin:
-export TNS_ADMIN=/opt/oracle/tns
+export TNS_ADMIN=$ORACLE_HOME/network/admin
 #
 # Setting NLS_DATE_FORMAT to include HH24:MI:SS will result in the rman log showing timestamps in this format. Without this it will use whatever the database default is - typically at a day granularity - not very useful in a backup script..
 export NLS_DATE_FORMAT='DD-MON-YYYY HH24:MI:SS'
@@ -68,7 +68,7 @@ else
 	
 	fi
 
-SCRIPT_DIR=${BASE_DIR}/${ORACLE_SID}/scripts/rman
+SCRIPT_DIR=${BASE_DIR}/scripts/rman
 HISTFILE=$SCRIPT_DIR/rman_${ORACLE_SID}_history.log
 
 #
@@ -98,18 +98,18 @@ fi
 
 #
 # Optionally flush shared pool - see sql_flush_shared_pool.sql script for why this may be necessary. 
-TIME=$(date +%c)
-echo "${TIME} - sql flush shared pool pre-rman executed for $ORACLE_SID" 
-sqlplus '/ as sysdba' @sql_flush_shared_pool.sql
+#TIME=$(date +%c)
+#echo "${TIME} - sql flush shared pool pre-rman executed for $ORACLE_SID" 
+#sqlplus '/ as sysdba' @sql_flush_shared_pool.sql
 
-TIME=$(date +%c)
-echo "${TIME} - rman $RMAN_SCRIPT started for $ORACLE_SID" >>$HISTFILE
+#TIME=$(date +%c)
+#echo "${TIME} - rman $RMAN_SCRIPT started for $ORACLE_SID" >>$HISTFILE
 
 #
 # Execute rman with catalog connection 
 # If not using a catalog simply remove the connection 
 #
-rman target / catalog $RMAN_CATALOG @$SCRIPT_DIR/${RMAN_SCRIPT}.rcv log=${RMAN_SCRIPT}_$ORACLE_SID.log
+rman target / @$SCRIPT_DIR/${RMAN_SCRIPT}.rcv log=${RMAN_SCRIPT}_$ORACLE_SID.log
 
 # No catalog version
 # rman target / @$SCRIPT_DIR/${RMAN_SCRIPT}.rcv log=${RMAN_SCRIPT}_$ORACLE_SID.log
